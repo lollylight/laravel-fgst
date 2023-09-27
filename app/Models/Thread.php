@@ -23,4 +23,7 @@ class Thread extends Model
     public function category(){
       return $this->belongsTo(Category::class,'cat_id');
     }
+    public function replies(){
+      return $this->hasMany(Reply::class,'thread_id','id');
+    }
 }

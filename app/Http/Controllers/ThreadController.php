@@ -24,8 +24,16 @@ class ThreadController extends Controller
     }
 
     static function getNewsThreads(){
-      $newsThreads = Thread::where('cat_id','3')->orderby('updated_at','desc')->get()->toArray();
-      $newsThreads['type'] = 'news'; 
+      $rawThread = Thread::where('cat_id','3')->orderby('updated_at','desc')->get();
+      $threads = [];
+      foreach ($rawThread as $thread){
+        $elem = $thread->toArray();
+        $elem['user_replies'] = $thread->replies()->get();
+        $elem['username'] = $username = User::select('name')->where('id',$elem['user_id'])->get()[0]['name'];
+        $threads[] = $elem;
+      }
+      $newsThreads['content'] = $threads;
+      $newsThreads['type'] = 'news';
       return $newsThreads;
     }
     static function getFavThreads(){

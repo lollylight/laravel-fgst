@@ -24,7 +24,7 @@
       </div>
       <div class="border-b-[1px] border-red-900/50 w-full text-white font-semibold p-1.5">
         <label for="news-radio" class="radio-a" id="news">
-          <input type="radio" class="radio-b" value="news">
+          <input type="radio" class="radio-b" value="news" checked>
           <span>Новости</span>
         </label>
         <br>
@@ -44,7 +44,7 @@
       <div class="newsline-header w-full text-white font-bold text-xl text-center p-1.5 border-b-[1px] border-red-900/50">
         Лента
       </div>
-      <div class="newsline-posts px-1 text-white">
+      <div class="newsline-posts px-1 text-white pb-1.5">
 
       </div>
     </div>
@@ -72,6 +72,15 @@
     max-height: 100px;
     overflow: hidden;
   }
+    .box img{
+      object-fit:cover;
+      object-position:center;
+    }
+    .thread-box{
+      max-width: 128px;
+      max-height: 128px;
+      overflow: hidden;
+    }
   .big_box{
     /* max-width: 600px; */
     max-height: 400px;
