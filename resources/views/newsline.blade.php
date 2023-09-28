@@ -23,17 +23,17 @@
         Параметры
       </div>
       <div class="border-b-[1px] border-red-900/50 w-full text-white font-semibold p-1.5">
-        <label for="news-radio" class="radio-a" id="news">
+        <label for="news-radio" class="radio-a" id="news-btn">
           <input type="radio" class="radio-b" value="news" checked>
           <span>Новости</span>
         </label>
         <br>
-        <label for="up-radio" class="radio-a" id="userposts">
+        <label for="up-radio" class="radio-a" id="userposts-btn">
           <input type="radio" class="radio-b" value="userposts">
           <span>Записи друзей</span>
         </label>
         <br>
-        <label for="forum-radio" class="radio-a" id="threads">
+        <label for="forum-radio" class="radio-a" id="threads-btn">
           <input type="radio" class="radio-b" value="threads">
           <span>Форум</span>
         </label>
@@ -98,6 +98,15 @@
     object-position:center;
     max-width: 650px;
     /* max-height: 400px; */
+  }
+  .radio-a{
+    cursor: pointer;
+  }
+  .radio-a:hover{
+    color: rgba(13,148,136,0.7);
+  }
+  .radio-a:active{
+    color: rgba(13,108,96,0.7);
   }
   @media (max-width: 900px) {
     .big_box{

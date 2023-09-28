@@ -222,7 +222,7 @@ function updateComments(){
         // catch (e){}
         if (match != null){
           match = match[0];
-          var content = comment.content.replace(match,'<button class="reply bg-teal-900 px-1 rounded" href="#comment_'+ comment.reply_to +'">'+match.split('@')[1].split('#')[0]+'</button>');
+          var content = comment.content.replace(match,'<span class="float-left h-[28px] reply bg-teal-900 px-1 rounded" href="#comment_'+ comment.reply_to +'">'+match.split('@')[1].split('#')[0]+'</span>');
         } else{
           var content = comment.content;
         }
@@ -243,7 +243,7 @@ function updateComments(){
               <button class="flex reply_btn underline ml-2 hover:text-red">Ответ</button>\
               '+ reply_to +'\
             </div>\
-            <div class="flex w-full text-base">\
+            <div class="flex w-full">\
               '+ content +'\
             </div>\
           </div>\

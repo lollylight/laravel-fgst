@@ -19,7 +19,7 @@ class NewslineController extends Controller
       echo json_encode($posts);
     }
     elseif ($request->type === 'news'){
-      $news = ThreadController::getNewsThreads();
+      $news = ThreadController::getThreads('news');
       echo json_encode($news);
     }
     elseif ($request->type === 'threads'){

@@ -23,22 +23,26 @@ class ThreadController extends Controller
       }
     }
 
-    static function getNewsThreads(){
-      $rawThread = Thread::where('cat_id','3')->orderby('updated_at','desc')->get();
+    static function getThreads($cat){
+      $catId = Category::select('id')->where('catlink',$cat)->get()->toArray()[0]['id'];
+      // dd($catId);
+      $rawThread = Thread::where('cat_id',$catId)->orderby('updated_at','desc')->get();
       $threads = [];
       foreach ($rawThread as $thread){
         $elem = $thread->toArray();
-        $elem['user_replies'] = $thread->replies()->get();
+        $elem['user_replies'] = array_reverse($thread->replies()->orderby('created_at','DESC')->take(3)->get()->toArray());
         $elem['username'] = $username = User::select('name')->where('id',$elem['user_id'])->get()[0]['name'];
         $threads[] = $elem;
       }
       $newsThreads['content'] = $threads;
-      $newsThreads['type'] = 'news';
+      if ($catId = 3){
+        $newsThreads['type'] = 'news';
+      }else{
+        $newsThreads['type'] = 'threads';
+      }
       return $newsThreads;
     }
-    static function getFavThreads(){
 
-    }
 
     public function createThread(Request $request){
       if ($request->ajax()){
@@ -66,68 +70,8 @@ class ThreadController extends Controller
     }
 
     public function showContent(Request $request){
-      if($request->ajax()){
-        $this->getThreads($request->cid);
-      }
+      $threads = self::getThreads($request->cid);
+      echo json_encode($threads);
     }
 
-    private function getThreads($cid){
-      $threads = Thread::where('cat_id',$cid)->orderby('updated_at','desc')->get();
-      foreach ($threads as $thread){
-        $cat = $thread->category()->get()[0];
-        $username = User::select('name')->where('id',$thread->user_id)->get()[0]['name'];
-        ?>
-        <div class="flex-col w-full text-white px-3 pt-2 pb-3 border-b-2 border-teal-600/50 bg-gray-900/[.5]">
-
-          <div class="w-full text-neutral-500 mb-2">
-            <span><a href="/profile/<?php echo $thread->user_id;?>"><?php echo $username;?></a>#<?php echo $thread->id;?></span>
-            <span><?php echo $thread->created_at;?></span>
-            <span class="ml-4"> Ответы: <?php echo $thread->replies;?></span>
-          </div>
-
-          <div class="w-full flex flex-row">
-            <?php if ($thread->image != 'nopic'){?>
-            <div class="flex w-[25%] items-start">
-              <div class="box">
-                <img class="op_pic max-w-[170px] mini_pic" src="<?php echo $thread->image;?>" alt="">
-              </div>
-            </div>
-            <a class="w-full ml-2" href="<?php echo '/forum/' . $cat->catlink . '/' . $thread->id;?>">
-              <div class="flex flex-col w-[75%]">
-                <span class="w-full flex text-[22px] font-semibold mb-1"><?php echo $thread->subject;?></span>
-                <div class="flex w-full text-base">
-                  <?php echo $this->shortText($thread->content,312);?>
-                </div>
-              </div>
-            </a>
-          <?php }else{?>
-            <a class="w-full" href="<?php echo '/forum/' . $cat->catlink . '/' . $thread->id;?>">
-              <div class="flex flex-col h-32">
-                <span class="w-full flex text-[22px] font-semibold mb-1"><?php echo $thread->subject;?></span>
-                <div class="flex w-full text-base">
-                  <?php echo $this->shortText($thread->content,312);?>
-                </div>
-              </div>
-            </a>
-        <?php  }?>
-
-          </div>
-
-        </div>
-        <?php
-      }
-    }
-
-    private function shortText($text, $maxLength, $endSymbol = '...'){
-      if(mb_strlen($text) <= $maxLength){
-        return $text;
-      }
-      $shortenedText = mb_substr($text,0,$maxLength);
-      $lastSpaceSymbol = mb_strrpos($shortenedText,' ');
-
-      if($lastSpaceSymbol === false){
-        return $shortenedText . $endSymbol;
-      }
-      return mb_substr($shortenedText, 0, $lastSpaceSymbol) . $endSymbol;
-    }
 }

@@ -24,7 +24,7 @@ function paintCurrentPageButton(){
 //Update Newsline
 
 $('.radio-a').click(function(){
-  var type = $(this).attr('id');
+  var type = $(this).attr('id').split('-')[0];
   $('.radio-b').prop('checked', false);
   $(this).find('.radio-b').prop('checked',true);
   console.log(type);
@@ -103,7 +103,7 @@ function getNews(type){
             <div class="w-full mt-3 ">\
               <h2 class="text-[26px] font-bold ml-2">'+ post.subject +'</h2>\
             </div>\
-            <div class="w-full my-4 px-3 text-lg ">\
+            <div class="w-full my-4 px-3">\
               '+text+'\
             </div>\
             '+ pictures +'\
@@ -158,8 +158,9 @@ function getNews(type){
                 }
                 reply_block += '\
                 <a href="/forum/news/'+ thread.id +'#'+ reply.id +'">\
-                <div id="'+ reply.id +'" class="reply_'+ reply.id +' flex-col w-[95%] text-white px-3 pt-2 pb-3 border-red-900/50 ml-auto border-b-[1px] rounded-md reply">\
+                <div id="'+ reply.id +'" class="reply_'+ reply.id +' flex-col w-[95%] text-white px-3 pt-2 pb-3 border-red-900/50 ml-auto border-l-[1px] border-b-[1px] rounded-md reply">\
                   <div class="w-full text-neutral-500 mb-1">\
+                    <span>Ответ#'+ reply.id +'</span>\
                     <span>'+ new Date(reply.created_at).toLocaleString() +'</span>\
                   </div>\
                   <div class="flex flex-col w-full">\
@@ -174,9 +175,9 @@ function getNews(type){
             }
 
             $('.newsline-posts').append('\
-            <div class="flex-col w-full text-white px-3 pt-2 rounded-md border-r-[1px] border-b-[1px] border-teal-600/50">\
+            <div class="flex-col w-full text-white px-3 pt-2 rounded-md border-r-[2px] border-b-[2px] border-teal-600/50 bg-gray-900/25">\
               <div class="w-full text-neutral-500 mb-2">\
-                  <span><a href="/profile/'+ thread.user_id +'">'+ thread.username +'</a>#'+ thread.id +'</span>\
+                  <span>Тред#'+ thread.id +' от <a href="/profile/'+ thread.user_id +'">'+ thread.username +'</a></span>\
                   <span>'+ new Date(thread.created_at).toLocaleString() +'</span>\
                   <span class="ml-4"> Ответы: '+ thread.replies +'</span>\
               </div>\
@@ -194,7 +195,7 @@ function getNews(type){
                 '+ reply_block +'\
           </div>');
           console.log($('.replies').children());
-          $('.replies').find('.reply').last().css('border','none');
+          $('.replies').find('.reply').last().css('border-bottom','none');
           }
         }
       }

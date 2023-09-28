@@ -7,7 +7,7 @@
   {{$cat->catname}}|{{$thread->subject}}
 @endsection
 @section('page-container')
-<div id="container" class="flex flex-row w-full pl-7 items-start h-full">
+<div id="container" class="flex flex-row w-full pl-7 items-start h-full mb-3">
 
   @include('inc.leftmenu_forum')
 

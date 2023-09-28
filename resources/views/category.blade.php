@@ -70,12 +70,13 @@ ul a:hover{
   #add_pic{
     width: 120px;
   }
-  .box{
-    max-width: 170px;
-    max-height: 170px;
+  .thread-box{
+    max-width: 150px;
+    max-height: 150px;
     overflow: hidden;
   }
   .mini_pic{
     object-fit:cover;
+    object-position: center;
   }
 </style>

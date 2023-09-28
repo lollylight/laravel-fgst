@@ -6,7 +6,8 @@ $.ajaxSetup({
 
 var file = undefined;
 var maxFileSize = 2 * 1024 * 1024;
-getThreads();
+var cUrl = new URL(window.location);
+getThreads(cUrl.pathname.split('/')[2]);
 getReplies();
 
 //FORUM
@@ -252,15 +253,78 @@ function sendReply(images){
   });
 }
 
-function getThreads(){
+function getThreads(cat){
   $.ajax({
     url: '/get-threads',
     method: 'POST',
-    data: {'cid': $('#cid').val()},
+    data: {'cid': cat},
     success: function(response){
+      var result = $.parseJSON(response);
       console.log('Data loaded');
-      $('#thread_list').html('');
-      $('#thread_list').html(response);
+      for (let i = 0; i < result.content.length; i++){
+        var thread = result.content[i];
+        var media = thread.image;
+        var opPic = '';
+        var user_replies = thread.user_replies;
+        if (media != 'nopic'){
+          opPic = '\
+                  <div class="flex w-[25%] items-start">\
+                      <div class="thread-box">\
+                          <img class="op_pic max-w-[170px] mini_pic" src="'+ media +'" alt="">\
+                      </div>\
+                  </div>';
+        }
+
+        var reply_block = '';
+        if (user_replies.length != 0){
+          reply_block = '<div class="replies w-full flex flex-col mt-2 pb-2 border-t-[1px] border-red-900/75">'
+          for (let k = 0; k < user_replies.length && k < 3; k++){
+            var reply = user_replies[k];
+            var reply_to = '';
+            if (reply.reply_to != 'none'){
+              reply_to = '<span class=""><a class="reply_to" href="/forum/news/'+ thread.id +'#'+ reply.reply_to +'">>>#'+ reply.reply_to +'</a></span>';
+            }
+            reply_block += '\
+            <a href="/forum/news/'+ thread.id +'#'+ reply.id +'">\
+            <div id="'+ reply.id +'" class="reply_'+ reply.id +' flex-col w-[95%] text-white px-3 pt-2 pb-3 border-red-900/50 ml-auto border-l-[1px] border-b-[1px] rounded-md reply">\
+              <div class="w-full text-neutral-500 mb-1">\
+                <span>Ответ#'+ reply.id +'</span>\
+                <span>'+ new Date(reply.created_at).toLocaleString() +'</span>\
+              </div>\
+              <div class="flex flex-col w-full">\
+                <div class="flex w-full">\
+                  '+ reply.content +'\
+                </div>\
+              </div>\
+            </div>\
+            </a>'
+          }
+          reply_block += '</div>';
+        }
+
+        $('#thread_list').append('\
+        <div class="flex-col w-full text-white px-3 pt-2 rounded-md border-r-[1px] border-b-[1px] border-teal-600/50 bg-gray-900/50">\
+          <div class="w-full text-neutral-500 mb-2">\
+              <span>Тред#'+ thread.id +' от <a href="/profile/'+ thread.user_id +'">'+ thread.username +'</a></span>\
+              <span>'+ new Date(thread.created_at).toLocaleString() +'</span>\
+              <span class="ml-4"> Ответы: '+ thread.replies +'</span>\
+          </div>\
+          <div class="w-full flex flex-row">\
+                '+ opPic +'\
+              <a class="w-full ml-2" href="/forum/news/'+ thread.id +'">\
+                  <div class="flex flex-col w-[99%]">\
+                      <span class="w-full flex text-[22px] font-semibold mb-1">'+ thread.subject +'</span>\
+                      <div class="flex w-full text-base mb-3">\
+                        '+ thread.content.replaceAll('\n','<br>').substring(0,312) +'\
+                      </div>\
+                  </div>\
+              </a>\
+          </div>\
+            '+ reply_block +'\
+      </div>');
+      console.log($('.replies').children());
+      $('.replies').find('.reply').last().css('border-bottom','none');
+      }
     }
   })
 }
