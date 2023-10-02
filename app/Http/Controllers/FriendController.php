@@ -226,7 +226,7 @@ class FriendController extends Controller
             }
             return $friendsId;
           } else{
-            return 'empty';
+            return 'none';
           }
     }
 }

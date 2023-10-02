@@ -25,22 +25,55 @@ class ThreadController extends Controller
 
     static function getThreads($cat){
       $catId = Category::select('id')->where('catlink',$cat)->get()->toArray()[0]['id'];
-      // dd($catId);
-      $rawThread = Thread::where('cat_id',$catId)->orderby('updated_at','desc')->get();
+
+      $rawThread = Thread::where('cat_id',$catId)->orderby('created_at','desc')->get();
       $threads = [];
-      foreach ($rawThread as $thread){
-        $elem = $thread->toArray();
-        $elem['user_replies'] = array_reverse($thread->replies()->orderby('created_at','DESC')->take(3)->get()->toArray());
-        $elem['username'] = $username = User::select('name')->where('id',$elem['user_id'])->get()[0]['name'];
-        $threads[] = $elem;
+      if ( !$rawThread->isEmpty() ){
+        
+        foreach ($rawThread as $thread){
+          $elem = $thread->toArray();
+          $elem['user_replies'] = array_reverse($thread->replies()->orderby('created_at','DESC')->take(3)->get()->toArray());
+          $elem['username'] = $username = User::select('name')->where('id',$elem['user_id'])->get()[0]['name'];
+          $threads[] = $elem;
+        }
+        $result['content'] = $threads;
+        if ($catId = 3){
+          $result['type'] = 'news';
+        }
+        return $result;
+
+      } else {
+        $result['content'] = [];
+        if ($catId = 3){
+          $result['type'] = 'news';
+        }
+        return $result;
       }
-      $newsThreads['content'] = $threads;
-      if ($catId = 3){
-        $newsThreads['type'] = 'news';
-      }else{
-        $newsThreads['type'] = 'threads';
+    }
+
+    static function getFavThreads($cats){
+      $rawThreads = Thread::whereIn('cat_id', $cats)->orderby('created_at','desc')->get();
+      $threads = [];
+      $result = [];
+      if ( !$rawThreads->isEmpty() ){
+
+        foreach ( $rawThreads as $thread){
+          $elem = $thread->toArray();
+          $elem['user_replies'] = array_reverse($thread->replies()->orderby('created_at','DESC')->take(3)->get()->toArray());
+          $elem['username'] = User::select('name')->where('id',$elem['user_id'])->get()[0]['name'];
+          $elem['catname'] = Category::select('catname')->where('id', $elem['cat_id'])->get()[0]['catname'];
+          $elem['catlink'] = Category::select('catlink')->where('id', $elem['cat_id'])->get()[0]['catlink'];
+          $threads[] = $elem;
+        }
+        $result['content'] = $threads;
+        $result['type'] = 'threads';
+        return $result;
+
+      } else {
+        $result['content'] = [];
+        $result['type'] = 'threads';
+        return $result;
       }
-      return $newsThreads;
     }
 
 

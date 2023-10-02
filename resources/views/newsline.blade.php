@@ -20,8 +20,9 @@
 
     <div class="w-[268px] h-[440px] bg-neutral-900/90 ml-7 mt-5">
       <div class="settings-header w-full text-center text-white p-1.5 text-xl font-semibold border-b-[1px] border-red-900/50">
-        Параметры
+        Фильтры
       </div>
+
       <div class="border-b-[1px] border-red-900/50 w-full text-white font-semibold p-1.5">
         <label for="news-radio" class="radio-a" id="news-btn">
           <input type="radio" class="radio-b" value="news" checked>
@@ -35,9 +36,21 @@
         <br>
         <label for="forum-radio" class="radio-a" id="threads-btn">
           <input type="radio" class="radio-b" value="threads">
-          <span>Форум</span>
+          <span>Избранное</span>
         </label>
       </div>
+
+      <div class="settings-header w-full text-center text-white p-1.5 text-lg font-semibold border-b-[1px] border-red-900/50">
+        Отображение
+      </div>
+
+      <div class="border-b-[1px] border-red-900/50 w-full text-white font-semibold p-1.5">
+        <button class="checkbox-a" id="compmode-btn">
+          <input id="compact" type="checkbox" class="checkbox-b" value="inactive">
+          <span>Компактный вид тредов</span>
+        </button>
+      </div>
+
     </div>
 
     <div class="w-[700px] bg-neutral-900/90 ml-5 mt-5">

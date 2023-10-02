@@ -111,7 +111,19 @@ function getCurrentPost(post_id){
       }
         // console.log(post.post.content);
         var content = post.post.content.replaceAll('\n','<p>');
-
+        var regexp = 'https\\:\\/\\/www\\.youtube\\.com\\/\\S+';
+        var yt_link = content.match(regexp);
+        var video;
+        if (yt_link != null){
+          video = '<div class="flex flex-row p-3 border-t-[1px] border-teal-800/25 mt-1">\
+          <div class="border-teal-800/25 bb_col mx-auto">';
+          for (let i = 0; i < yt_link.length && i < 4; i++){
+            var yt_block_id = yt_link[i].split('watch?v=')[1].split('&')[0];
+            video += '<div id="'+ yt_block_id +'" class="big_box" style="max-width: 600px">\
+            </div>';
+          }
+          video += '</div></div>';
+        }
         var edit_btn = '';
 
         if ($('#authId').attr('content') == post.post.user_id){
@@ -144,15 +156,29 @@ function getCurrentPost(post_id){
       <div class="w-full my-4 ml-3 px-2 text-lg">\
         '+ content +'\
       </div>\
-      '+ media +'\
+      '+ media + video +'\
       <div class="text-neutral-500 w-full text-right">\
         '+ new Date(post.post.created_at).toLocaleString() +'\
       </div>\
     </div>\
         ')
+        if (yt_link != null){
+          for (let i = 0; i < yt_link.length && i < 4; i++){
+            var videoId = yt_link[i].split('watch?v=')[1].split('&')[0];
+            var player;
+            window.YT.ready(function(){
+                player = new window.YT.Player(String(videoId), {
+                  height: '360',
+                  width: '640',
+                  videoId: videoId,
+                });
+            })
+          }
+        }
     }
   })
 }
+
 //Комментарии
 
 $(document).ready(function(){

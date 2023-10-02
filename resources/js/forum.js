@@ -7,20 +7,84 @@ $.ajaxSetup({
 var file = undefined;
 var maxFileSize = 2 * 1024 * 1024;
 var cUrl = new URL(window.location);
-getThreads(cUrl.pathname.split('/')[2]);
+var category = cUrl.pathname.split('/')[2];
+getThreads(category);
 getReplies();
+paintCurrentPageButton();
+if ( category != 'news'){
+  isCatFav(category, 0);
+} else{
+  $('#like-btn').remove();
+}
 
-//FORUM
+//FORUM GENERAL
 $(document).ready(function(){
   $('#new_thread').click(function(){
     $('#thread_form').slideDown('slow');
   })
 })
 
-paintCurrentPageButton()
+$('#like-btn').attr('value', category);
+$('#like-btn').click(function(){
+  isCatFav(category, 1);
+
+})
+
+function setFavCat(cat){
+  $.ajax({
+    url: '/set-fav',
+    method: 'post',
+    data: {cid: cat},
+    success: function(response){
+      $('#like-btn').removeClass('like-btn');
+      $('#like-btn').addClass('dislike-btn');
+    }
+  })
+}
+function deleteFavCat(cat){
+  $.ajax({
+    url: '/delete-fav',
+    method: 'post',
+    data: {cid: cat},
+    success: function(response){
+      $('#like-btn').removeClass('dislike-btn');
+      $('#like-btn').addClass('like-btn');
+    }
+  })
+}
+function isCatFav(cat, action){
+  $.ajax({
+    url: '/is-fav',
+    method: 'post',
+    data: {cid: cat},
+    success: function(response){
+      var result = $.parseJSON(response);
+      console.log('CATEGORY STATUS: ' + result.status);
+      if ( result.status == 1 ){
+        $('#like-btn').removeClass('like-btn');
+        $('#like-btn').addClass('dislike-btn');
+        $('#like-btn').prop('title','Убрать из избранного');
+      } else{
+        $('#like-btn').prop('title','Добавить в избранное');
+      }
+
+      if (action === 1){
+
+        if ( result.status == 1 ){
+          deleteFavCat(cat);
+        } else {
+          setFavCat(cat);
+        }
+
+      }
+
+    }
+  })
+}
+
 function paintCurrentPageButton(){
   var cUrl = new URL(window.location);
-  console.log(cUrl);
+  // console.log(cUrl);
   $('.current-btn').each(function(){
     // console.log(cUrl.pathname.startsWith($(this).attr('href')));
     if (cUrl.pathname.startsWith($(this).attr('href'))){
@@ -31,6 +95,7 @@ function paintCurrentPageButton(){
   })
 }
 
+//THREAD
 $(document).ready(function(){
   $('#thread_submit').click(function(){
     if(file == undefined){
@@ -61,7 +126,7 @@ $(document).mouseup(function(e){
   if(!$('#thread_form').is(e.target) && $('#thread_form').has(e.target).length == 0 && !$('#new_thread').is(e.target)){
     $('#thread_form').slideUp('slow');
     clearTF();
-    console.log('closed by click on outside el')
+    // console.log('closed by click on outside el')
   };
 })
 
@@ -106,14 +171,6 @@ $('.preview').click(function(){
 })
 });
 
-$(window).scroll(function() {
-  if ($(this).scrollTop()>250){
-    $('#scrollUp').fadeIn();
-  } else{
-    $('#scrollUp').fadeOut();
-  }
- });
-
 $(document).ready(function(){
   $('#scrollUp').click(function(){
     $('html,body').animate({scrollTop:0},'300');
@@ -150,7 +207,7 @@ $(document).ready(function(){
     }else{
       files = temp;
     }
-    console.log(files);
+    // console.log(files);
     var elem = document.querySelector('.preview_reply');
     for (var i = 0;i < files.length;i++){
       if ( files[i].size > maxFileSize) {
@@ -177,8 +234,8 @@ $(document).ready(function(){
   $(document).on('click','.preview_reply', function(){
     var elemfullId = $(this).attr('id');
     var elemId = elemfullId.split('_', 1)[1];
-    console.log(typeof(files));
-    console.log(files);
+    // console.log(typeof(files));
+    // console.log(files);
     files.splice(elemId, 1);
     $(this).remove();
     $('.p_popup').hide();
@@ -322,7 +379,7 @@ function getThreads(cat){
           </div>\
             '+ reply_block +'\
       </div>');
-      console.log($('.replies').children());
+      // console.log($('.replies').children());
       $('.replies').find('.reply').last().css('border-bottom','none');
       }
     }
@@ -335,7 +392,7 @@ function getReplies(){
     method: 'POST',
     data: {'thid': $('#thid').val()},
     success: function(response){
-      console.log(response);
+      // console.log(response);
       $('.replies_list').html('');
       $('.replies_list').html(response);
     }

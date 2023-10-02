@@ -17,12 +17,15 @@ use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/profile/{user}','App\Http\Controllers\UserContoller@index')->middleware(['auth'])->name('profile');
 Route::get('/profile',function () {
-  return redirect()->route('profile',['user'=>Auth::user()->id]);
+  if ( !Auth::user() == null ){
+    return redirect()->route('profile',['user'=>Auth::user()->id]);
+  }
+  return view('auth.login');
 });
 
 Route::get('/newsline',function () {
@@ -67,5 +70,8 @@ Route::post('/send-message', 'App\Http\Controllers\MessagesController@sendMessag
 Route::post('/get-messages', 'App\Http\Controllers\MessagesController@getMessages');
 Route::post('/get-contacts', 'App\Http\Controllers\MessagesController@getContacts');
 Route::post('/get-news', 'App\Http\Controllers\NewslineController@getNews');
+Route::post('/is-fav', 'App\Http\Controllers\LikeController@isCatFav');
+Route::post('/set-fav', 'App\Http\Controllers\LikeController@setFavCat');
+Route::post('/delete-fav', 'App\Http\Controllers\LikeController@deleteFavCat');
 
 require __DIR__.'/auth.php';

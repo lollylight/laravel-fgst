@@ -8,7 +8,7 @@
   <meta id="csrf_token" name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="/build/assets/app-79303d09.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <!-- <script type="text/javascript" src="/js/profile_script.js"></script> -->
+  <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
   <script type="text/javascript" src="/build/assets/app-38d1fa96.js" defer></script>
 
   </script>

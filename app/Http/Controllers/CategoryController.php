@@ -18,4 +18,9 @@ class CategoryController extends Controller
         return abort(404);
       }
     }
+
+    static function getCategoryId($catName){
+      $cat = Category::select('id')->where('catlink',$catName)->get()->toArray()[0]['id'];
+      return $cat;
+    }
 }

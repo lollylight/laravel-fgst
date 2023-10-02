@@ -18,7 +18,7 @@
                     <x-nav-link href="/profile">
                       {{ __('Профиль') }}
                     </x-nav-link>
-                    <x-nav-link href="/newsline#news">
+                    <x-nav-link href="/newsline">
                       {{ __('Лента') }}
                     </x-nav-link>
                     <x-nav-link href="/forum">

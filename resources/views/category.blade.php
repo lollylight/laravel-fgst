@@ -20,8 +20,8 @@ ul a:hover{
 
   <div id="thread_container" class="w-[59%] flex flex-col bg-neutral-900/[.85] ml-5 mt-5">
 
-    <div id="tc_header" class="w-full text-center text-white font-bold text-[26px] p-2 tracking-wider">
-      {{$cat->catname}}
+    <div id="tc_header" class="flex flex-row w-full text-white font-bold text-[26px] p-2 tracking-wider">
+      <span class="w-full text-center">{{$cat->catname}}</span>
     </div>
     <div class="text-white w-full">
       <button id="new_thread" class="w-full text-lg uppercase tracking-wider font-semibold h-10 border-t-[1px] border-red-900/75 bg-teal-900/50 hover:bg-teal-600/50 active:bg-teal-900/75">Создать тред</button>
@@ -49,8 +49,18 @@ ul a:hover{
     @include('inc.thread_list')
 
   </div>
-  <div id="scrollUp" class="bg-gray-900/25 text-[rgba(255,255,255,0.5)] hover:text-[rgba(255,255,255,1)] hover:bg-gray-900/75 h-10 fixed w-44 mt-[40.3%] ml-[78.85%] z-10">
-    <button  class="w-full h-full  text-lg font-bold pt-1">Наверх</button>
+
+  <button id="like-btn" class="like-btn p-[12px] absolute mt-5 ml-[74.85%]" value="" title="">
+    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="24" height="24" fill="none"/>
+      <path d="M21 8.99998C21 12.7539 15.7156 17.9757 12.5857 20.5327C12.2416 20.8137 11.7516 20.8225 11.399 20.5523C8.26723 18.1523 3 13.1225 3 8.99998C3 2.00001 12 2.00002 12 8C12 2.00001 21 1.99999 21 8.99998Z" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div class="bg-gray-900/25  hover:bg-gray-900/75 h-14 mt-[39.1%] fixed w-56  ml-[78.85%] z-10">
+
+
+    <button id="scrollUp" class="w-full h-14 text-[rgba(255,255,255,0.5)] hover:text-[rgba(255,255,255,1)] text-lg font-bold">Наверх</button>
   </div>
 </div>
 
@@ -78,5 +88,25 @@ ul a:hover{
   .mini_pic{
     object-fit:cover;
     object-position: center;
+  }
+  .like-btn{
+    cursor: pointer;
+  }
+  .dislike-btn svg path{
+    stroke: rgba(234,153,153,1);
+  }
+  .like-btn:hover svg path{
+    stroke: rgba(0,0,0,1);
+    fill: rgba(13,148,136,1);
+  }
+  .like-btn:active svg path{
+    fill: rgba(19,78,74,1);
+  }
+  .dislike-btn:hover svg path{
+    stroke: rgba(0,0,0,1);
+    fill: rgba(234,153,153,1);
+  }
+  .dislike-btn:active svg path{
+    fill: rgba(19,78,74,1);
   }
 </style>

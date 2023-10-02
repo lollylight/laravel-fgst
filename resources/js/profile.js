@@ -449,8 +449,49 @@ function getAllPosts(uid){
 
         var text = post.content.replaceAll('\n','<p>');
         text = text.replaceAll('<br><br>','<br>');
+        var regexp = 'https\\:\\/\\/www\\.youtube\\.com\\/\\S+';
+        var yt_link = text.match(regexp);
+        if (yt_link != null){
+          var yt_block_id = yt_link[0].split('watch?v=')[1].split('&')[0];
+        }
+
         if(post.content.length > 315){
-          text = text.substring(0,312) + '...';
+          if(yt_link != null){
+
+            if (media.length != 0){
+              text = text.substring(0,305) + '... (Видео)';
+              console.log('it should be working');
+            }else{
+              pictures = '\
+              <div class="flex flex-row p-3 border-t-[1px] border-teal-800/25 mt-1">\
+              <div class="border-teal-800/25 bb_col mx-auto">\
+                <div id="'+ yt_block_id +'" class="big_box" style="max-width: 600px">\
+                \
+                </div>\
+              </div></div>';
+            }
+
+          }
+
+          text = text.substring(0,305) + '... (Видео)';
+        }else{  
+
+          if(yt_link != null){
+
+            if (media.length === 0){
+              console.log('it should be working');
+              pictures = '\
+              <div class="flex flex-row p-3 border-t-[1px] border-teal-800/25 mt-1">\
+              <div class="border-teal-800/25 bb_col mx-auto">\
+              <div id="'+ yt_block_id +'" class="big_box" style="max-width: 600px">\
+              \
+              </div>\
+              </div></div>';
+            }else{
+              text = text + '...(Видео)';
+            }
+
+          }
         }
         if (post.comments.length === 1){
           var comm = ' Комментарий';
@@ -495,10 +536,33 @@ function getAllPosts(uid){
               </button>\
           </div>\
         ');
+
+        if (yt_link != null){
+            var videoId = yt_link[0].split('watch?v=')[1].split('&')[0];
+            var player;
+            window.YT.ready(function(){
+                player = new window.YT.Player(String(videoId), {
+                  height: '360',
+                  width: '640',
+                  videoId: videoId,
+                })
+            })
       }
+
     }
+  }
   })
 }
+
+var player;
+ function onYouTubeIframeAPIReady(bid,vid) {
+   player = new YT.Player(bid, {
+     height: '360',
+     width: '640',
+     videoId: vid,
+   });
+ }
+
 
 function deleteUserPost(post_id){
   $.ajax({
