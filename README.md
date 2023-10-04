@@ -41,4 +41,4 @@ This project is a prototype of modern social network developed by me for studyin
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/feed_2.png">
 
 ### Private Chat:
-<img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/messages_1.png">
+<img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/message_1.png">
