@@ -24,21 +24,21 @@ This project is a prototype of modern social network developed by me for studyin
 
 ## Screenshots
 
-1. Profile, friends and user publications:
+### Profile, friends and user publications:
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/Profile.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/profile_5.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/profile_4.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/profile_2.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/profile_3.png">
 
-2. Forum:
+### Forum:
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/forum_1.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/forum_2.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/forum_3.png">
 
-3. News Feed:
+### News Feed:
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/feed_1.png">
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/feed_2.png">
 
-4. Private Chat:
+### Private Chat:
 <img src="https://github.com/lollylight/laravel-fgst/blob/master/readme_screens/messages_1.png">
