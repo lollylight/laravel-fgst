@@ -25,12 +25,12 @@
 
       <div class="border-b-[1px] border-red-900/50 w-full text-white font-semibold p-1.5">
         <label for="news-radio" class="radio-a" id="news-btn">
-          <input type="radio" class="radio-b" value="news" checked>
+          <input type="radio" class="radio-b" value="news">
           <span>Новости</span>
         </label>
         <br>
         <label for="up-radio" class="radio-a" id="userposts-btn">
-          <input type="radio" class="radio-b" value="userposts">
+          <input type="radio" class="radio-b" value="userposts" checked>
           <span>Записи друзей</span>
         </label>
         <br>

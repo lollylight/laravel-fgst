@@ -462,6 +462,7 @@ function getAllPosts(uid){
               text = text.substring(0,305) + '... (Видео)';
               console.log('it should be working');
             }else{
+              text = text.substring(0,305) + '... (Видео)';
               pictures = '\
               <div class="flex flex-row p-3 border-t-[1px] border-teal-800/25 mt-1">\
               <div class="border-teal-800/25 bb_col mx-auto">\
@@ -471,10 +472,11 @@ function getAllPosts(uid){
               </div></div>';
             }
 
+          }else{
+            text = text.substring(0,312) + '...';
           }
 
-          text = text.substring(0,305) + '... (Видео)';
-        }else{  
+        }else{
 
           if(yt_link != null){
 
@@ -487,8 +489,9 @@ function getAllPosts(uid){
               \
               </div>\
               </div></div>';
+              text = text + '... (Видео)';
             }else{
-              text = text + '...(Видео)';
+              text = text + '... (Видео)';
             }
 
           }

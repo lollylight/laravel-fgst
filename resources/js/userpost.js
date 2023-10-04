@@ -110,7 +110,7 @@ function getCurrentPost(post_id){
         media += '</div></div>'
       }
         // console.log(post.post.content);
-        var content = post.post.content.replaceAll('\n','<p>');
+        var content = post.post.content.replaceAll('\n','<br>');
         var regexp = 'https\\:\\/\\/www\\.youtube\\.com\\/\\S+';
         var yt_link = content.match(regexp);
         var video;
@@ -248,7 +248,7 @@ function updateComments(){
         // catch (e){}
         if (match != null){
           match = match[0];
-          var content = comment.content.replace(match,'<span class="float-left h-[28px] reply bg-teal-900 px-1 rounded" href="#comment_'+ comment.reply_to +'">'+match.split('@')[1].split('#')[0]+'</span>');
+          var content = comment.content.replace(match,'<span class="reply h-[23px] bg-teal-900 px-1 rounded-md cursor-pointer" href="#comment_'+ comment.reply_to +'">'+match.split('@')[1].split('#')[0]+'</span>');
         } else{
           var content = comment.content;
         }

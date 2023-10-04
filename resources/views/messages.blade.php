@@ -15,7 +15,7 @@
 
 @section('page-container')
 <input type="hidden" id="uid" value="{{$user->id}}">
-<div id="container" class="pt-5 text-white h-[570px]">
+<div id="container" class="pt-5 text-white h-[85%]">
   <div class="flex flex-row px-8">
 
     <div class="bg-neutral-900/90 w-[300px] h-[550px]">
@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div id="msg_window" class="bg-neutral-900/90 w-[700px] h-[550px] ml-5" style="display:none;">
+    <div id="msg_window" class="bg-neutral-900/90 w-[700px] h-[90%] ml-5" style="display:none;">
 
       <div id="msg_list_header" class="w-full h-10 text-xl text-center font-bold pt-1.5 border-b-2 border-red-900/50">
         UserName
