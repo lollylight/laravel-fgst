@@ -8,9 +8,9 @@ This project is a prototype of modern social network developed by me for studyin
 2. Set and update information about yourself on your profile page.
 3. Share your thoughts, images and YouTube video on your profile page.
 4. Make some friends cause this project allows and enocourages you to do it.
-5. Leave a comment under your friend's publication if you need to.
-6. If you need to discuss something or ask some questions, you can visit forum, what is kindly divided into categories, which you can mark as favorites.
-7. If you want to keep up to date the lastest news or you're afraid of skipping new threads on forum or your friends' posts, you should know that you can do it by using news feed.
+5. Leave a comment under your friend's publication if you feel you need to.
+6. If you need to discuss something or ask some questions, you can visit forum, which is kindly divided into categories.
+7. If you want to keep up to date the lastest news or you're afraid of missing new forum threads or your friends' publications, know that all of them can be found by clicking news feed button.
 8. Also you can talk and share your recently saved memes with somebody in private chat.
 
 ## Features in development
