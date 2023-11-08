@@ -18,8 +18,8 @@ This project is a prototype of modern social network developed by me for studyin
 1. Implement user complaints system.
 2. Allow admins to ban naughty users.
 3. Create a control panel for adminitstrative purposes such as inspecting forum topics, suspicious users and accepting suggestions.
-4. Implement notification system by using websockets.
-5. Find and fix major and minor bugs.
+4. Implement notification system based on websockets.
+5. Find and fix all major and minor bugs.
 6. And do all the things that will come in my mind.
 
 ## Screenshots
